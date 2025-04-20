@@ -74,7 +74,7 @@ class FieldOrderChecker(Checker):
         ]
 
     def visit_Name(self, node):
-        if node.id in self.ordered_fieldnames:
+        if node.id in self.ordered_fieldnames and isinstance(node.ctx, ast.Store):
             seen_field_index = self.ordered_fieldnames.index(node.id)
             if seen_field_index < self.seen_ordered_fields_indices[-1]:
                 self.violations.add(
