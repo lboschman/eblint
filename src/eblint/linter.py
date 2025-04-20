@@ -1,8 +1,8 @@
 import ast
 import os
-import sys
 import re
-from typing import NamedTuple, Set
+import sys
+from typing import List, NamedTuple, Set
 
 
 class Violation(NamedTuple):
@@ -64,6 +64,32 @@ class MandatoryFieldChecker(Checker):
                 )
 
 
+class FieldOrderChecker(Checker):
+    def __init__(self, issue_code, field_names: List[str]):
+        super().__init__(issue_code)
+        self.ordered_fieldnames = field_names
+        self.seen_ordered_fields = []
+        self.seen_ordered_fields_indices = [
+            -1,
+        ]
+
+    def visit_Name(self, node):
+        if node.id in self.ordered_fieldnames:
+            seen_field_index = self.ordered_fieldnames.index(node.id)
+            if seen_field_index < self.seen_ordered_fields_indices[-1]:
+                self.violations.add(
+                    Violation(
+                        node,
+                        f"Field {node.id} defined after {self.seen_ordered_fields[-1]}",
+                    )
+                )
+
+            self.seen_ordered_fields_indices.append(seen_field_index)
+            self.seen_ordered_fields.append(node.id)
+
+        super().generic_visit(node)
+
+
 def main():
     source_path = sys.argv[1]
 
@@ -71,6 +97,11 @@ def main():
     linter.checkers.add(
         MandatoryFieldChecker(
             issue_code="M001", field_names=["easyblock", "name", "versionnumber"]
+        )
+    )
+    linter.checkers.add(
+        FieldOrderChecker(
+            "M002", field_names=["easyblock", "name", "version", "versionsuffixer"]
         )
     )
 
