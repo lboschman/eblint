@@ -136,12 +136,15 @@ def main():
     )
     linter.checkers.add(
         FieldOrderChecker(
-            "M002", field_names=["easyblock", "name", "version", "versionsuffixer"]
+            "M002",
+            field_names=["easyblock", "name", "version", "versionsuffixer"],
         )
     )
     linter.checkers.add(
         FieldOrderChecker(
-            "M003", field_names=["easyblock", "name", "versionsuffixer"], strict_mode=True
+            "M003",
+            field_names=["easyblock", "name", "versionsuffixer"],
+            strict_mode=True,
         )
     )
 
