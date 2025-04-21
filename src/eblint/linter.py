@@ -179,7 +179,8 @@ def main():
     linter = Linter()
     linter.checkers.add(
         MandatoryFieldChecker(
-            issue_code="M001", field_names=["easyblock", "name", "versionnumber"]
+            issue_code="M001",
+            field_names=["easyblock", "name", "version", "versionsuffixer"],
         )
     )
     linter.checkers.add(
@@ -191,13 +192,15 @@ def main():
     linter.checkers.add(
         FieldOrderChecker(
             "M003",
-            field_names=["easyblock", "name", "versionsuffixer"],
+            field_names=["easyblock", "name", "version", "versionsuffixer"],
             strict_mode=True,
         )
     )
 
     linter.checkers.add(
-        DependencyFormatChecker("D001"),
+        DependencyFormatChecker(
+            "D001", dependency_keywords=["dependencies", "builddependencies"]
+        ),
     )
 
     linter.run(source_path)
