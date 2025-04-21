@@ -33,15 +33,13 @@ class Linter:
                 print(f"{filename}: {checker.issue_code}: {message}")
 
     def run(self, source_path):
-        filename = os.path.basename(source_path)
-
         with open(source_path, "r") as source_file:
             source_code = source_file.read()
 
         tree = ast.parse(source_code)
         for checker in self.checkers:
             checker.visit(tree)
-            self.print_violations(checker, filename)
+            self.print_violations(checker, source_path)
 
 
 class MandatoryFieldChecker(Checker):
