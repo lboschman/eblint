@@ -43,6 +43,8 @@ class Linter:
 
 
 class MandatoryFieldChecker(Checker):
+    """Checks the presence of mandatory fields."""
+
     def __init__(self, issue_code, field_names):
         super().__init__(issue_code)
         self.mandatory_field_names = field_names
@@ -63,6 +65,27 @@ class MandatoryFieldChecker(Checker):
 
 
 class FieldOrderChecker(Checker):
+    """Checks the order of the fields in an eb-config file.
+
+    In regular mode, the FieldOrderChecker only checks if the listed fields are in
+    the defined order. Defined fields that are missing and undefined fields do not
+    raise an error.
+
+    In strict mode, all the defined fields should appear before the undefined fields.
+    Missing defined fields do not raise an error.
+    Mandatory fields should be checked with the MandatoryFieldChecker.
+
+    UnOrderedField1 = ... <-- raises error in strict mode
+    OrderedField1 = ...
+    UnOrderedField2 = ... <-- raises error in strict mode
+    OrderedField2 = ...
+    UnOrderedField3 = ... <-- raises error in strict mode
+    OrderedField4 = ...
+    UnOrderedField4 = ... <-- raises error in strict mode
+    OrderedField3 = ... <-- raises error
+
+    """
+
     def __init__(self, issue_code, field_names: List[str], strict_mode: bool = False):
         super().__init__(issue_code)
         self.ordered_fieldnames = field_names
