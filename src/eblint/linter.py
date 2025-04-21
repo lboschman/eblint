@@ -65,17 +65,23 @@ class MandatoryFieldChecker(Checker):
 
 
 class FieldOrderChecker(Checker):
-    def __init__(self, issue_code, field_names: List[str]):
+    def __init__(self, issue_code, field_names: List[str], strict_mode: bool = False):
         super().__init__(issue_code)
         self.ordered_fieldnames = field_names
         self.seen_ordered_fields = []
         self.seen_ordered_fields_indices = [
             -1,
         ]
+        self.strict_mode = strict_mode
 
     def visit_Name(self, node):
-        if node.id in self.ordered_fieldnames and isinstance(node.ctx, ast.Store):
-            seen_field_index = self.ordered_fieldnames.index(node.id)
+        if (
+            node.id in self.ordered_fieldnames or self.strict_mode is True
+        ) and isinstance(node.ctx, ast.Store):
+            try:
+                seen_field_index = self.ordered_fieldnames.index(node.id)
+            except ValueError:
+                seen_field_index = 9001
             if seen_field_index < self.seen_ordered_fields_indices[-1]:
                 self.violations.add(
                     Violation(
@@ -102,6 +108,11 @@ def main():
     linter.checkers.add(
         FieldOrderChecker(
             "M002", field_names=["easyblock", "name", "version", "versionsuffixer"]
+        )
+    )
+    linter.checkers.add(
+        FieldOrderChecker(
+            "M003", field_names=["easyblock", "name", "versionsuffixer"], strict_mode=True
         )
     )
 
