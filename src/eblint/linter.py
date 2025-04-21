@@ -104,10 +104,18 @@ class FieldOrderChecker(Checker):
             except ValueError:
                 seen_field_index = 9001
             if seen_field_index < self.seen_ordered_fields_indices[-1]:
+                if self.strict_mode is True:
+                    wrong_ordered_field = self.seen_ordered_fields[-1]
+                else:
+                    wrong_ordered_field = [
+                        field
+                        for field in self.seen_ordered_fields
+                        if field in self.ordered_fieldnames
+                    ][-1]
                 self.violations.add(
                     Violation(
                         node,
-                        f"Field {node.id} defined after field {self.seen_ordered_fields[-1]}",
+                        f"'{wrong_ordered_field}' defined before '{node.id}'",
                     )
                 )
 
