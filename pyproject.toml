@@ -1,0 +1,19 @@
+[project]
+name = "eblint"
+version = "0.0.1"
+authors = [
+  { name="Leon Boschman", email="leon.boschman@chalmers.se" },
+]
+description = "A linter for easybuild config files"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-2.0-or-later"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/lboschman/eblint"
+Issues = "https://github.com/lboschman/eblint/issues"
