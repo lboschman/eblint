@@ -12,7 +12,7 @@ class Violation(NamedTuple):
 
 
 class Checker(ast.NodeVisitor):
-    def __init__(self, issue_code):
+    def __init__(self, issue_code: str):
         self.issue_code = issue_code
         self.violations: Set[Violation] = set()
 
@@ -24,12 +24,12 @@ class Linter:
     @staticmethod
     def print_violations(checker: Checker, filename: str):
         for node, message in checker.violations:
-            try:
+            if isinstance(node, ast.expr):
                 print(
                     f"{filename}:{node.lineno}:{node.col_offset}: "
                     f"{checker.issue_code}: {message}"
                 )
-            except AttributeError:
+            else:
                 print(f"{filename}: {checker.issue_code}: {message}")
 
     def run(self, source_path):
@@ -52,7 +52,7 @@ class MandatoryFieldChecker(Checker):
         self.mandatory_field_names = field_names
         self.seen_field_names = []
 
-    def visit_Name(self, node: ast.AST):
+    def visit_Name(self, node: ast.Name):
         if isinstance(node.ctx, ast.Store):
             self.seen_field_names.append(node.id)
         super().generic_visit(node)
@@ -88,7 +88,9 @@ class FieldOrderChecker(Checker):
 
     """
 
-    def __init__(self, issue_code, field_names: List[str], strict_mode: bool = False):
+    def __init__(
+        self, issue_code: str, field_names: List[str], strict_mode: bool = False
+    ):
         super().__init__(issue_code)
         self.ordered_fieldnames = field_names
         self.seen_ordered_fields = []
@@ -162,7 +164,7 @@ class DependencyFormatChecker(Checker):
         self.check_string_format(node.elts[0], self.PACKAGE_NAME_FORMAT)
         self.check_string_format(node.elts[1], self.VERSION_FORMAT)
 
-    def visit_Assign(self, node):
+    def visit_Assign(self, node: ast.Assign):
         for target in node.targets:
             if target.id in self.dependency_keywords and isinstance(target.ctx, Store):
                 self.check_dependency_list(node.value)
