@@ -30,7 +30,7 @@ class Linter:
                     f"{checker.issue_code}: {message}"
                 )
             else:
-                print(f"{filename}:1:0 {checker.issue_code}: {message}")
+                print(f"{filename}:1:0: {checker.issue_code}: {message}")
 
     def run(self, source_path):
         with open(source_path, "r") as source_file:
