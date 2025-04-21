@@ -1,6 +1,5 @@
 import ast
 import os
-import re
 import sys
 from typing import List, NamedTuple, Set
 
@@ -50,7 +49,6 @@ class MandatoryFieldChecker(Checker):
         self.seen_field_names = []
 
     def visit_Name(self, node: ast.AST):
-        # for target in node.targets:
         if isinstance(node.ctx, ast.Store):
             self.seen_field_names.append(node.id)
         super().generic_visit(node)
