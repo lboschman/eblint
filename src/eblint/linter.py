@@ -86,7 +86,7 @@ class FieldOrderChecker(Checker):
                 self.violations.add(
                     Violation(
                         node,
-                        f"Field {node.id} defined after {self.seen_ordered_fields[-1]}",
+                        f"Field {node.id} defined after field {self.seen_ordered_fields[-1]}",
                     )
                 )
 
