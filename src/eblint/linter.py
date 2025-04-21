@@ -150,7 +150,7 @@ class DependencyFormatChecker(Checker):
             self.violations.add(
                 Violation(
                     string_node,
-                    f"Incorrectly formatted package name/version: {value_string}",
+                    f"Incorrectly formatted package name/version: '{value_string}'",
                 )
             )
 
