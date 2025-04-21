@@ -9,9 +9,23 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
 ]
+dependencies = ['importlib-metadata; python_version<"3.10"']
 license = "GPL-2.0-or-later"
 license-files = ["LICENSE"]
 
 [project.urls]
 Homepage = "https://github.com/lboschman/eblint"
 Issues = "https://github.com/lboschman/eblint/issues"
+
+[project.scripts]
+eblint = "eblint.linter:main"
+
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["eblint*"]
+exclude = ["tests*"]
+namespaces = true
