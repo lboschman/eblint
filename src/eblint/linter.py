@@ -3,18 +3,9 @@ import os
 import re
 import sys
 from ast import Store
-from typing import List, NamedTuple, Set
+from typing import List, Set
 
-
-class Violation(NamedTuple):
-    node: ast.AST
-    message: str
-
-
-class Checker(ast.NodeVisitor):
-    def __init__(self, issue_code: str):
-        self.issue_code = issue_code
-        self.violations: Set[Violation] = set()
+from .checkers import Checker
 
 
 class Linter:
