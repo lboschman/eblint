@@ -1,3 +1,5 @@
+from eblint.checkers.last_field_checker import LastFieldChecker
+
 from . import FieldOrderChecker, MandatoryFieldChecker
 
 _default_mandatory_field_checker = MandatoryFieldChecker(
@@ -61,8 +63,11 @@ _default_first_fields_checker = FieldOrderChecker(
     strict_mode=True,
 )
 
+_default_last_field_checker = LastFieldChecker("M004", last_field_name="moduleclass")
+
 DEFAULT_CHECKERS = {
     _default_mandatory_field_checker,
     _default_field_order_checker,
     _default_first_fields_checker,
+    _default_last_field_checker
 }
