@@ -1,5 +1,4 @@
 import ast
-import os
 import re
 import sys
 from ast import Store
