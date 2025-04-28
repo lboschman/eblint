@@ -1,4 +1,7 @@
-from . import FieldOrderChecker, LastFieldChecker, MandatoryFieldChecker
+from .field_order_checker import FieldOrderChecker
+from .mandatory_field_checker import MandatoryFieldChecker
+from .last_field_checker import LastFieldChecker
+
 
 _default_mandatory_field_checker = MandatoryFieldChecker(
     issue_code="M001",
