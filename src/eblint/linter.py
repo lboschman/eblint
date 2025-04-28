@@ -2,17 +2,12 @@ import ast
 import sys
 from typing import Set
 
-from .checkers import (
-    Checker,
-    DependencyFormatChecker,
-    FieldOrderChecker,
-    MandatoryFieldChecker,
-)
+from .checkers import DEFAULT_CHECKERS, Checker
 
 
 class Linter:
-    def __init__(self):
-        self.checkers: Set[Checker] = set()
+    def __init__(self, checkers: Set[Checker] = set()):
+        self.checkers = checkers
 
     @staticmethod
     def print_violations(checker: Checker, filename: str):
@@ -38,41 +33,7 @@ class Linter:
 def main():
     source_path = sys.argv[1]
 
-    linter = Linter()
-    linter.checkers.add(
-        MandatoryFieldChecker(
-            issue_code="M001",
-            field_names=[
-                "easyblock",
-                "name",
-                "version",
-                "versionsuffixer",
-                "dependencies",
-                "builddependencies",
-                "toolchain",
-                "bla"
-            ],
-        )
-    )
-    linter.checkers.add(
-        FieldOrderChecker(
-            "M002",
-            field_names=["easyblock", "name", "version", "versionsuffixer"],
-        )
-    )
-    linter.checkers.add(
-        FieldOrderChecker(
-            "M003",
-            field_names=["easyblock", "name", "version", "versionsuffixer"],
-            strict_mode=True,
-        )
-    )
-
-    linter.checkers.add(
-        DependencyFormatChecker(
-            "D001", dependency_keywords=["dependencies", "builddependencies"]
-        ),
-    )
+    linter = Linter(checkers=DEFAULT_CHECKERS)
 
     linter.run(source_path)
 
