@@ -1,6 +1,6 @@
 [project]
 name = "eblint"
-version = "0.0.1"
+version = "0.0.2a1"
 authors = [{ name = "Leon Boschman", email = "leon.boschman@chalmers.se" }]
 description = "A linter for easybuild config files"
 readme = "README.md"
