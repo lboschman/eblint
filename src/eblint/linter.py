@@ -178,7 +178,15 @@ def main():
     linter.checkers.add(
         MandatoryFieldChecker(
             issue_code="M001",
-            field_names=["easyblock", "name", "version", "versionsuffixer"],
+            field_names=[
+                "easyblock",
+                "name",
+                "version",
+                "versionsuffixer",
+                "dependencies",
+                "builddependencies",
+                "toolchain",
+            ],
         )
     )
     linter.checkers.add(
