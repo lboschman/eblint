@@ -39,4 +39,4 @@ jobs:
         uv run flake8 src --exit-zero --max-complexity=10
     - name: Test with pytest
       run: |
-        uv run pytest tests
+        uv run pytest
