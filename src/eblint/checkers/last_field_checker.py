@@ -29,3 +29,4 @@ class LastFieldChecker(Checker):
                     f"Last defined field must be '{self.last_field_name}'",
                 )
             )
+        self.last_visited_field_node = None

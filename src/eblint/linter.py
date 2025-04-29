@@ -1,5 +1,5 @@
+import argparse
 import ast
-import sys
 from typing import Set, Union
 
 from .checkers import DEFAULT_CHECKERS, Checker
@@ -20,7 +20,7 @@ class Linter:
             else:
                 print(f"{filename}:1:0: {checker.issue_code}: {message}")
 
-    def run(self, source_path):
+    def run(self, source_path, cleanup: bool = True):
         with open(source_path, "r") as source_file:
             source_code = source_file.read()
 
@@ -29,14 +29,26 @@ class Linter:
             checker.visit(tree)
             self.print_violations(checker, source_path)
 
+        if cleanup is True:
+            self.clear_violations()
+
+    def clear_violations(self):
+        for checker in self.checkers:
+            checker.clear_violations()
+
 
 def main():
-    source_path = sys.argv[1]
+    parser = argparse.ArgumentParser(
+        prog="eblint", description="A linter for easybuild easyconfig files"
+    )
+    parser.add_argument("filename", nargs="+", help="File[s] to be linted")
+    args = parser.parse_args()
 
     linter = Linter(checkers=DEFAULT_CHECKERS)
 
-    linter.run(source_path)
+    for source_path in args.filename:
+        linter.run(source_path)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()

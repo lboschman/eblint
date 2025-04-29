@@ -66,3 +66,10 @@ class FieldOrderChecker(Checker):
             self.seen_ordered_fields.append(node.id)
 
         super().generic_visit(node)
+
+    def visit_Module(self, node: ast.Module):
+        super().generic_visit(node)
+        self.seen_ordered_fields = []
+        self.seen_ordered_fields_indices = [
+            -1,
+        ]

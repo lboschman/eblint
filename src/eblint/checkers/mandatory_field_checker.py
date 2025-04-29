@@ -24,3 +24,4 @@ class MandatoryFieldChecker(Checker):
                 self.violations.add(
                     Violation(node, f"Missing mandatory field '{name}'")
                 )
+        self.seen_field_names = []
