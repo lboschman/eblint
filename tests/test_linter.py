@@ -17,7 +17,7 @@ def test_empty_checkers():
     assert len(linter.checkers) == 0, "linter.checkers is not empty"
 
 
-def test_default_linter(mandatory_field_linter):
+def test_small_linter(mandatory_field_linter):
     assert isinstance(
         mandatory_field_linter.checkers, set
     ), "linter.checkers is not a set"
