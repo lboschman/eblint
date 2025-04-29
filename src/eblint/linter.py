@@ -1,13 +1,13 @@
 import ast
 import sys
-from typing import Set
+from typing import Set, Union
 
 from .checkers import DEFAULT_CHECKERS, Checker
 
 
 class Linter:
-    def __init__(self, checkers: Set[Checker] = set()):
-        self.checkers = checkers
+    def __init__(self, checkers: Union[Checker, Set[Checker]] = set()):
+        self.checkers = checkers if not isinstance(checkers, Checker) else {checkers}
 
     @staticmethod
     def print_violations(checker: Checker, filename: str):
