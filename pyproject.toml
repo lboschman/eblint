@@ -47,3 +47,4 @@ per-file-ignores = [
 exclude = ".venv"
 count = true
 statistics = true
+pytest-parametrize-names-type = "csv"

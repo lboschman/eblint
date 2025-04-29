@@ -1,4 +1,5 @@
 import os
+from typing import List, Tuple
 
 import pytest
 
@@ -7,7 +8,7 @@ from eblint.linter import Linter
 
 DEFAULT_ISSUE_CODES = [c.issue_code for c in DEFAULT_CHECKERS]
 
-fail_filenames = []
+fail_filenames: List[Tuple] = []
 for issue_code in DEFAULT_ISSUE_CODES:
     folder = f"tests/testfiles/linter/fail/{issue_code}"
     with os.scandir(folder) as folder_iterator:
