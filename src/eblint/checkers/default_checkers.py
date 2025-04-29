@@ -20,9 +20,9 @@ _default_mandatory_field_checker = MandatoryFieldChecker(
 _default_field_order_checker = FieldOrderChecker(
     issue_code="M002",
     field_names=[
-        "easyblock",
-        "name",
-        "version",
+        # "easyblock",
+        # "name",
+        # "version",
         "versionsuffix",
         "homepage",
         "description",
