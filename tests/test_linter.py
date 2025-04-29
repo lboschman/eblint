@@ -2,8 +2,20 @@ import os
 
 import pytest
 
-from eblint.checkers import MandatoryFieldChecker
+from eblint.checkers import DEFAULT_CHECKERS, MandatoryFieldChecker
 from eblint.linter import Linter
+
+DEFAULT_ISSUE_CODES = [c.issue_code for c in DEFAULT_CHECKERS]
+
+fail_filenames = []
+for issue_code in DEFAULT_ISSUE_CODES:
+    folder = f"tests/testfiles/linter/fail/{issue_code}"
+    with os.scandir(folder) as folder_iterator:
+        filenames = [
+            f"{folder}/{item.name}" for item in folder_iterator if item.is_file()
+        ]
+    for fname in filenames:
+        fail_filenames.append((issue_code, fname))
 
 pass_folder = "tests/testfiles/linter/pass"
 with os.scandir(pass_folder) as folder_iterator:
@@ -44,3 +56,20 @@ def test_default_linter_pass(filename, default_linter):
     default_linter.run(filename)
     for checker in default_linter.checkers:
         assert len(checker.violations) == 0, f"Failed {checker.issue_code} on good file"
+
+
+@pytest.mark.parametrize("issue_code,filename", fail_filenames)
+def test_default_linter_fail(issue_code, filename, default_linter):
+    default_linter.clear_violations()
+    for checker in default_linter.checkers:
+        assert len(checker.violations) == 0, "Violations not cleared"
+    default_linter.run(filename, cleanup=False)
+    for checker in default_linter.checkers:
+        if checker.issue_code == issue_code:
+            assert (
+                len(checker.violations) > 0
+            ), f"Passed {checker.issue_code} on bad file {filename}"
+        else:
+            assert (
+                len(checker.violations) == 0
+            ), f"Failed {checker.issue_code} on good file {filename}"
