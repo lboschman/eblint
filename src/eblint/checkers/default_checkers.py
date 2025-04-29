@@ -61,7 +61,7 @@ _default_field_order_checker = FieldOrderChecker(
 
 _default_first_fields_checker = FieldOrderChecker(
     "M003",
-    field_names=["easyblock", "name", "version", "versionsuffixer"],
+    field_names=["easyblock", "name", "version", "versionsuffix"],
     strict_mode=True,
 )
 

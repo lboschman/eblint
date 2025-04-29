@@ -2,7 +2,7 @@ easyblock = 'EB_UCX_Plugins'
 
 name = 'UCX-CUDA'
 version = '1.15.0'
-versionsuffixer = '-CUDA-%(cudaver)s'
+versionsuffix = '-CUDA-%(cudaver)s'
 foo = "bar"
 homepage = 'http://www.openucx.org/'
 description = """Unified Communication X
