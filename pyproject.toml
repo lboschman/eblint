@@ -37,7 +37,7 @@ test = ["pytest>=8.0", "pytest-cov>=6.0", "flake8>=7.0", "flake8-pytest-style>=2
 default-groups = ["test"]
 
 [tool.pytest.ini_options]
-addopts = ["--import-mode=importlib"]
+addopts = ["--import-mode=importlib", "--cov=src"]
 
 [tool.flake8]
 max-line-length = 88
