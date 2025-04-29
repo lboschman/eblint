@@ -1,6 +1,6 @@
 import argparse
 import ast
-from typing import Set, Union
+from typing import Optional, Set, Union
 
 from .checkers import DEFAULT_CHECKERS, Checker
 
@@ -12,13 +12,18 @@ class Linter:
         checkers: collection of objects that check rules
     """
 
-    def __init__(self, checkers: Union[Checker, Set[Checker]] = set()):
+    def __init__(self, checkers: Optional[Union[Checker, Set[Checker]]] = None):
         """Initiate a linter.
 
         Args:
             checkers: the rule checkers to be attached to the linter
         """
-        self.checkers = checkers if not isinstance(checkers, Checker) else {checkers}
+        if checkers is None:
+            self.checkers = set()
+        elif isinstance(checkers, Checker):
+            self.checkers = {checkers}
+        else:
+            self.checkers = checkers
 
     @staticmethod
     def print_violations(checker: Checker, filename: str):
