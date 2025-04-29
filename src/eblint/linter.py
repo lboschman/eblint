@@ -20,7 +20,7 @@ class Linter:
             else:
                 print(f"{filename}:1:0: {checker.issue_code}: {message}")
 
-    def run(self, source_path):
+    def run(self, source_path, cleanup: bool = True):
         with open(source_path, "r") as source_file:
             source_code = source_file.read()
 
@@ -28,6 +28,13 @@ class Linter:
         for checker in self.checkers:
             checker.visit(tree)
             self.print_violations(checker, source_path)
+
+        if cleanup is True:
+            self.clear_violations()
+
+    def clear_violations(self):
+        for checker in self.checkers:
+            checker.clear_violations()
 
 
 def main():
