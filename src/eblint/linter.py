@@ -1,5 +1,5 @@
+import argparse
 import ast
-import sys
 from typing import Set, Union
 
 from .checkers import DEFAULT_CHECKERS, Checker
@@ -38,11 +38,16 @@ class Linter:
 
 
 def main():
-    source_path = sys.argv[1]
+    parser = argparse.ArgumentParser(
+        prog="eblint", description="A linter for easybuild easyconfig files"
+    )
+    parser.add_argument("filename", nargs="+", help="File[s] to be linted")
+    args = parser.parse_args()
 
     linter = Linter(checkers=DEFAULT_CHECKERS)
 
-    linter.run(source_path)
+    for source_path in args.filename:
+        linter.run(source_path)
 
 
 if __name__ == "__main__":
