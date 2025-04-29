@@ -16,7 +16,7 @@ def test_no_file(mocker):
     mocker.patch("eblint.linter.Linter.run")
     with pytest.raises(SystemExit):
         main()
-        Linter.run.assert_not_called()
+    Linter.run.assert_not_called()
 
 
 def test_wrong_file(mocker):
