@@ -17,12 +17,15 @@ _default_mandatory_field_checker = MandatoryFieldChecker(
     ],
 )
 
+_default_first_fields_checker = FieldOrderChecker(
+    "M002",
+    field_names=["easyblock", "name", "version", "versionsuffix"],
+    strict_mode=True,
+)
+
 _default_field_order_checker = FieldOrderChecker(
-    issue_code="M002",
+    issue_code="M003",
     field_names=[
-        # "easyblock",
-        # "name",
-        # "version",
         "versionsuffix",
         "homepage",
         "description",
@@ -59,17 +62,11 @@ _default_field_order_checker = FieldOrderChecker(
     ],
 )
 
-_default_first_fields_checker = FieldOrderChecker(
-    "M003",
-    field_names=["easyblock", "name", "version", "versionsuffix"],
-    strict_mode=True,
-)
-
 _default_last_field_checker = LastFieldChecker("M004", last_field_name="moduleclass")
 
 DEFAULT_CHECKERS = {
     _default_mandatory_field_checker,
-    _default_field_order_checker,
     _default_first_fields_checker,
+    _default_field_order_checker,
     _default_last_field_checker,
 }
