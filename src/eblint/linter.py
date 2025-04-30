@@ -1,16 +1,38 @@
 import argparse
 import ast
-from typing import Set, Union
+from typing import Optional, Set, Union
 
 from .checkers import DEFAULT_CHECKERS, Checker
 
 
 class Linter:
-    def __init__(self, checkers: Union[Checker, Set[Checker]] = set()):
-        self.checkers = checkers if not isinstance(checkers, Checker) else {checkers}
+    """A linter interface to run a file through multiple checkers.
+
+    Attributes:
+        checkers: collection of objects that check rules
+    """
+
+    def __init__(self, checkers: Optional[Union[Checker, Set[Checker]]] = None):
+        """Initiate a linter.
+
+        Args:
+            checkers: the rule checkers to be attached to the linter
+        """
+        if checkers is None:
+            self.checkers = set()
+        elif isinstance(checkers, Checker):
+            self.checkers = {checkers}
+        else:
+            self.checkers = checkers
 
     @staticmethod
     def print_violations(checker: Checker, filename: str):
+        """Print all the violations found in a single file.
+
+        Args:
+            checker: checker whose violations to print
+            filename: file in which the violations where found
+        """
         for node, message in checker.violations:
             if isinstance(node, ast.expr):
                 print(
@@ -20,7 +42,16 @@ class Linter:
             else:
                 print(f"{filename}:1:0: {checker.issue_code}: {message}")
 
-    def run(self, source_path, cleanup: bool = True):
+    def run(self, source_path: str, cleanup: bool = True):
+        """Run a file through the linter.
+
+        In between files it is important to reset the checkers to their original state.
+        It is possible to omit this, but this might lead to unexpected behaviour.
+
+        Args:
+            source_path: path to the file to be checked
+            cleanup: whether to reset the checkers to a clean state afterwards.
+        """
         with open(source_path, "r") as source_file:
             source_code = source_file.read()
 
@@ -38,6 +69,10 @@ class Linter:
 
 
 def main():
+    """Function for command line interface
+
+    This function is invoked by the `eblint` command.
+    """
     parser = argparse.ArgumentParser(
         prog="eblint", description="A linter for easybuild easyconfig files"
     )

@@ -7,6 +7,14 @@ from .violation import Violation
 
 
 class DependencyFormatChecker(Checker):
+    """Checker for dependency format
+
+    Attributes:
+        VERSION_FORMAT: format for version code
+        PACKAGE_NAME_FORMAT: format for package name
+        dependency_keywords: which fields contain a list of dependencies
+        stored_names: variable definitions for later evaluation
+    """
     VERSION_FORMAT = r"\d+((\.\d+)*)"
     PACKAGE_NAME_FORMAT = r"\w*"
 

@@ -1,8 +1,8 @@
 easyblock = 'EB_UCX_Plugins'
 
-version = '1.15.0'
 name = 'UCX-CUDA'
-versionsuffixer = '-CUDA-%(cudaver)s'
+version = '1.15.0'
+versionsuffix = '-CUDA-%(cudaver)s'
 foo = "bar"
 homepage = 'http://www.openucx.org/'
 description = """Unified Communication X
@@ -12,8 +12,9 @@ and high-performance applications
 This module adds the UCX CUDA support.
 """
 
-toolchain = {'name': 'GCCcore', 'version': '13.2.0'}
+# toolchain = {'name': 'GCCcore', 'version': '13.2.0'}
 toolchainopts = {'pic': True}
+toolchain = {'name': 'GCCcore', 'version': '13.2.0'}
 
 source_urls = ['https://github.com/openucx/ucx/releases/download/v%(version)s']
 sources = [{'filename': 'ucx-%(version)s.tar.gz', 'alt_location': 'UCX'}]
