@@ -6,14 +6,14 @@ from .last_field_checker import LastFieldChecker
 _default_mandatory_field_checker = MandatoryFieldChecker(
     issue_code="M001",
     field_names=[
-        "easyblock",
         "name",
         "version",
         "homepage",
         "description",
-        "dependencies",
-        "builddependencies",
         "toolchain",
+        # moduleclass is taken care of by M004.
+        # If M004 gets removed, uncomment the line below
+        # "moduleclass",
     ],
 )
 
