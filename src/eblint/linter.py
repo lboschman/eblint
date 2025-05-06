@@ -55,7 +55,7 @@ class Linter:
         with open(source_path, "r") as source_file:
             source_code = source_file.read()
 
-        tree = ast.parse(source_code)
+        tree = ast.parse(source_code, filename=source_path)
         for checker in self.checkers:
             checker.visit(tree)
             self.print_violations(checker, source_path)
