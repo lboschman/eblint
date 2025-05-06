@@ -18,3 +18,4 @@ class ForbiddenFieldChecker(Checker):
                     message=f"{node.id} should not be defined in EB config file",
                 )
             )
+        super().generic_visit(node)
