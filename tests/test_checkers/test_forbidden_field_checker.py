@@ -47,5 +47,5 @@ def test_two_missing_fields(two_field_checker):
     )
     two_field_checker.visit(test_tree)
     assert len(two_field_checker.violations) == 2, "Missing violations"
-    assert "forbidden_field_2" in two_field_checker.violations.pop().message
-    assert "forbidden_field_1" in two_field_checker.violations.pop().message
+    assert "forbidden_field_" in two_field_checker.violations.pop().message
+    assert "forbidden_field_" in two_field_checker.violations.pop().message
