@@ -1,7 +1,7 @@
 from .field_order_checker import FieldOrderChecker
-from .mandatory_field_checker import MandatoryFieldChecker
+from .forbidden_field_checker import ForbiddenFieldChecker
 from .last_field_checker import LastFieldChecker
-
+from .mandatory_field_checker import MandatoryFieldChecker
 
 _default_mandatory_field_checker = MandatoryFieldChecker(
     issue_code="M001",
@@ -64,9 +64,12 @@ _default_field_order_checker = FieldOrderChecker(
 
 _default_last_field_checker = LastFieldChecker("M004", last_field_name="moduleclass")
 
+_default_forbidden_field_checker = ForbiddenFieldChecker("M005", ["accept_eula"])
+
 DEFAULT_CHECKERS = {
     _default_mandatory_field_checker,
     _default_first_fields_checker,
     _default_field_order_checker,
     _default_last_field_checker,
+    _default_forbidden_field_checker,
 }
