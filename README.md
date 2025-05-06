@@ -34,14 +34,12 @@ Currently the following rules are in place
 The following fields are required
 
 ```txt
-easyblock
 name
 version
 homepage
 description
-dependencies
-builddependencies
 toolchain
+moduleclass
 ```
 
 ### M002: First ordered fields
@@ -101,3 +99,7 @@ moduleclass
 ### M004: Final field
 
 The last field in an easybuild config file should be `moduleclass`.
+
+### M005: Forbidden fields
+
+The field `accept_eula` should not be defined in a public EasyConfig file.
