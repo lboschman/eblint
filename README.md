@@ -1,4 +1,5 @@
 # An easybuild config linter
+[![DOI](https://zenodo.org/badge/970020883.svg)](https://doi.org/10.5281/zenodo.15472823)
 
 Eblint is a linter for [easybuild config files](https://docs.easybuild.io/writing-easyconfig-files/).
 It uses the Python standard library `ast` module to parse the config files,
